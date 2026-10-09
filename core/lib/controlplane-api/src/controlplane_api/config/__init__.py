@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     def smoke_marker_is_a_separate_claim(cls, value: str) -> str:
         reserved = {"sub", "iss", "aud", "exp", "iat", "nbf", "jti", "azp", "email",
                     "preferred_username", "tenant_id", "permissions", "realm_access",
-                    "groups", "scope", "amr", "panopticon_auth", "purpose", "host_org_id",
+                    "groups", "scope", "amr", "account_type", "panopticon_auth", "purpose", "host_org_id",
                     "https://panopticon.dev/tenant_id"}
         if not value.strip() or value != value.strip() or value in reserved:
             raise ValueError("Smoke session marker must be a separate nonempty claim")
