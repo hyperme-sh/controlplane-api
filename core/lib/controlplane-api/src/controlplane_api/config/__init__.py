@@ -284,6 +284,8 @@ class Settings(BaseSettings):
             "refund hops. Not a browser JWT. Empty fails closed."
         ),
     )
+    auth_host_binding_url: str = Field(default="", description="Hypermesh owner URL for host identity resolution")
+    host_binding_internal_token: str = Field(default="", description="Dedicated auth-to-host-owner credential; at least 32 characters")
     hypermesh_internal_token: str = Field(
         default="",
         validation_alias="HYPERMESH_INTERNAL_TOKEN",
