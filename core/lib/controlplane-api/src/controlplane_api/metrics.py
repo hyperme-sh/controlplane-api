@@ -587,14 +587,6 @@ def _sync_postgres_url(url: str) -> str:
     return url
 
 
-_OUTBOX_SQL = """
-SELECT
-  COUNT(*) FILTER (WHERE status IN ('pending', 'claimed')) AS depth,
-  COUNT(*) FILTER (WHERE status = 'dead') AS dead
-FROM controlplane_event_deliveries
-"""
-
-
 def _maybe_register_outbox_probe() -> None:
     """Opt in with ``METRICS_OUTBOX_PROBE=1`` on one service. Default is off."""
 
@@ -627,13 +619,12 @@ def _database_outbox_probe(url: str) -> Callable[[], tuple[int, int]]:
                 },
             )
             holder["engine"] = engine
-            holder["sql"] = text(_OUTBOX_SQL)
             holder["timeout"] = text("SET LOCAL statement_timeout = 2000")
-        sql = holder["sql"]
+        from controlplane_events.store import delivery_counts_sync
+
         with engine.connect() as conn:  # type: ignore[union-attr]
             conn.execute(holder["timeout"])  # type: ignore[arg-type]
-            row = conn.execute(sql).one()
-        return int(row.depth), int(row.dead)
+            return delivery_counts_sync(conn)
 
     return probe
 
