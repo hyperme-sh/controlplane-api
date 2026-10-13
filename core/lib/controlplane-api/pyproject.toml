@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "controlplane-api"
-version = "0.18.0"
+version = "0.19.0"
 requires-python = ">=3.13"
 description = "Shared configuration and HTTP API scaffolding"
 dependencies = [
