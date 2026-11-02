@@ -1,19 +1,37 @@
 # controlplane-api
 
-Private component extraction from `FyberLabs/panopticon`.
+Shared configuration and HTTP scaffolding: settings, logging, exceptions,
+utilities, event names, metrics, CORS, health/version endpoints, permissions,
+operator plugin registration and DTOs. Package version is **0.23.0**.
 
-Source commit: `2d92d13f38d491c298631b9b9296979c1fbadd19`.
+The process owns one settings instance, Prometheus registry and router set.
+Settings configure the identity library. Plugin registration accepts trusted
+local declarations, rejects duplicate IDs and returns independent copies.
+The package imports no legacy API or product implementation.
 
-Retained paths:
+## Development
 
-- `core/lib/controlplane-api`
+Use Python 3.13+ and uv 0.11.26. Read access over HTTPS is required for the private
+`hyperme-sh/controlplane-identity` and `hyperme-sh/controlplane-events` repositories.
+Both dependencies use full immutable commit pins in distribution metadata and
+uv.lock, so normal wheel installers resolve the same revisions.
 
-The import retains selected-path Git history and verifies every retained blob and
-file mode against that exact source. Rename predecessor paths are not followed.
-Source paths stay in their original layout for review. See `EXTRACTION.json`.
+```sh
+uv sync --frozen
+bash scripts/check-package.sh
+```
 
-This is a history import, not a standalone release or runtime cutover. Dependency
-closure, workspace/lock configuration, compatibility packages, contract snapshots,
-CI/runner eligibility and destination-specific credentials must be reviewed before
-adoption. Actions remain disabled. No credential, deployment ref or runtime is
-copied or switched; the original monorepo remains intact.
+Tests run from source, a fresh wheel outside the checkout and a wheel rebuilt
+from the source archive. Both wheel payloads must match every runtime source file.
+Consumer compatibility aliases and full service suites require their own checks.
+
+## CI
+
+The main-push/manual workflow uses GitHub-hosted Ubuntu workers, pinned actions,
+read-only contents and checkout without persisted credentials. It requires
+`DEPENDENCY_READ_TOKEN` with contents:read on the identity and events repositories
+only; Git authentication headers are restricted to those repository URLs.
+The job rejects non-main refs and does not run on pull-request events.
+Actions remains disabled until scoped dependency access and the hosted-worker
+policy are configured and a main run succeeds. No publishing or deployment is
+performed by this workflow.
