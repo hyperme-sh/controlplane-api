@@ -184,7 +184,7 @@ _collectors_ready = False
 _server_lock = threading.Lock()
 _server = None
 _host_selection: ContextVar[str | None] = ContextVar(
-    "panopticon_host_selection", default=None
+    "spanopticon_host_selection", default=None
 )
 
 
@@ -383,7 +383,7 @@ def _git_sha() -> str:
         raw = os.environ.get(name, "").strip()
         if _SHA.fullmatch(raw):
             return raw.lower()
-    tag = os.environ.get("PANOPTICON_IMAGE_TAG", "").strip()
+    tag = os.environ.get("SPANOPTICON_IMAGE_TAG", "").strip()
     if _SHA.fullmatch(tag):
         return tag.lower()
     return "unknown"

@@ -17,8 +17,8 @@ def test_all_public_modules_import_without_legacy_services():
 
 
 @pytest.mark.parametrize('name,sha', [
-    ('controlplane-identity', '76f70a942f7c5e7ab57e47541044978e6bae13e5'),
-    ('controlplane-events', 'ede5ef3203f1910856828a058b42b0ee4edf4dda'),
+    ('controlplane-identity', '5675e7b617db705a7b0caf25f2d65d8a492f32b1'),
+    ('controlplane-events', 'd8bc887460c08f30c6a1dcb951bac042bad326a7'),
 ])
 def test_dependency_metadata(name, sha):
     dep, = [d for d in requires('controlplane-api') if d.startswith(name + ' ')]
@@ -33,7 +33,7 @@ def test_identity_uses_shared_settings(monkeypatch):
 
 
 def test_plain_health_and_version_http(monkeypatch):
-    for key in ('CPEDGE_HYPERMESH_SERVICE_URL', 'GIT_SHA', 'SOURCE_SHA', 'HYPERMESH_SOURCE_SHA', 'BUILT_AT', 'PANOPTICON_IMAGE_DIGEST', 'IMAGE_DIGEST'):
+    for key in ('CPEDGE_HYPERMESH_SERVICE_URL', 'GIT_SHA', 'SOURCE_SHA', 'HYPERMESH_SOURCE_SHA', 'BUILT_AT', 'SPANOPTICON_IMAGE_DIGEST', 'IMAGE_DIGEST'):
         monkeypatch.delenv(key, raising=False)
     monkeypatch.setenv('SERVICE_NAME', 'api-wheel-test')
     app = FastAPI()
