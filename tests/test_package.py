@@ -17,7 +17,7 @@ def test_all_public_modules_import_without_legacy_services():
 
 
 @pytest.mark.parametrize('name,sha', [
-    ('controlplane-identity', '5675e7b617db705a7b0caf25f2d65d8a492f32b1'),
+    ('controlplane-identity', 'fbdeb1c11f17fa192b7505355c64d1f0af1234dc'),
     ('controlplane-events', 'd8bc887460c08f30c6a1dcb951bac042bad326a7'),
 ])
 def test_dependency_metadata(name, sha):
