@@ -27,7 +27,7 @@ Consumer compatibility aliases and full service suites require their own checks.
 
 ## CI
 
-The main-push/manual workflow uses GitHub-hosted Ubuntu workers, pinned actions,
+The main-push/manual workflow uses the shared-local self-hosted Linux runners, pinned actions,
 read-only contents and checkout without persisted credentials. It requires
 `DEPENDENCY_READ_TOKEN` with contents:read on the identity and events repositories
 only; Git authentication headers are restricted to those repository URLs.
