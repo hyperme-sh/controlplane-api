@@ -73,7 +73,7 @@ def version_payload(env: Mapping[str, str] | None = None) -> dict[str, str]:
         "git_sha": git_sha,
         "built_at": built_at,
     }
-    digest = _digest(_env(source, "PANOPTICON_IMAGE_DIGEST")) or _digest(
+    digest = _digest(_env(source, "SPANOPTICON_IMAGE_DIGEST")) or _digest(
         _env(source, "IMAGE_DIGEST")
     )
     if digest:

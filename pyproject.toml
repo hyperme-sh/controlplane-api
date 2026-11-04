@@ -8,7 +8,7 @@ version = "0.23.0"
 requires-python = ">=3.13"
 description = "Shared configuration and HTTP API scaffolding"
 dependencies = [
-    "controlplane-identity @ git+https://github.com/hyperme-sh/controlplane-identity.git@76f70a942f7c5e7ab57e47541044978e6bae13e5", "controlplane-events @ git+https://github.com/hyperme-sh/controlplane-events.git@ede5ef3203f1910856828a058b42b0ee4edf4dda", "colorlog>=6.9.0", "fastapi>=0.135.0",
+    "controlplane-identity @ git+https://github.com/hyperme-sh/controlplane-identity.git@5675e7b617db705a7b0caf25f2d65d8a492f32b1", "controlplane-events @ git+https://github.com/hyperme-sh/controlplane-events.git@d8bc887460c08f30c6a1dcb951bac042bad326a7", "colorlog>=6.9.0", "fastapi>=0.135.0",
     "pydantic>=2.12.0", "pydantic-settings>=2.6.0", "email-validator>=2.0.0",
     "python-dotenv>=1.1.1", "prometheus-client>=0.21.1",
     "sqlalchemy>=2.0.43", "psycopg[binary]>=3.2.0",
