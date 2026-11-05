@@ -2,7 +2,7 @@
 
 Shared configuration and HTTP scaffolding: settings, logging, exceptions,
 utilities, event names, metrics, CORS, health/version endpoints, permissions,
-operator plugin registration and DTOs. Package version is **0.24.0**.
+operator plugin registration and DTOs. Package version is **0.24.1**.
 
 The process owns one settings instance, Prometheus registry and router set.
 Settings configure the identity library. Plugin registration accepts trusted
