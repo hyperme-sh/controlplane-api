@@ -312,7 +312,7 @@ wheels = [
 
 [[package]]
 name = "controlplane-api"
-version = "0.23.0"
+version = "0.24.0"
 source = { editable = "." }
 dependencies = [
     { name = "colorlog" },
@@ -337,8 +337,8 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "colorlog", specifier = ">=6.9.0" },
-    { name = "controlplane-events", git = "https://github.com/hyperme-sh/controlplane-events.git?rev=d8bc887460c08f30c6a1dcb951bac042bad326a7" },
-    { name = "controlplane-identity", git = "https://github.com/hyperme-sh/controlplane-identity.git?rev=5675e7b617db705a7b0caf25f2d65d8a492f32b1" },
+    { name = "controlplane-events", git = "https://github.com/hyperme-sh/controlplane-events.git?rev=ae5aa86dc53b1a9e25ae4527fefeea6da6fb66ea" },
+    { name = "controlplane-identity", git = "https://github.com/hyperme-sh/controlplane-identity.git?rev=94717d746f9d321dde1a44019c10e31acaee3204" },
     { name = "email-validator", specifier = ">=2.0.0" },
     { name = "fastapi", specifier = ">=0.135.0" },
     { name = "prometheus-client", specifier = ">=0.21.1" },
@@ -357,8 +357,8 @@ dev = [
 
 [[package]]
 name = "controlplane-events"
-version = "0.1.0"
-source = { git = "https://github.com/hyperme-sh/controlplane-events.git?rev=d8bc887460c08f30c6a1dcb951bac042bad326a7#d8bc887460c08f30c6a1dcb951bac042bad326a7" }
+version = "0.24.0"
+source = { git = "https://github.com/hyperme-sh/controlplane-events.git?rev=ae5aa86dc53b1a9e25ae4527fefeea6da6fb66ea#ae5aa86dc53b1a9e25ae4527fefeea6da6fb66ea" }
 dependencies = [
     { name = "asyncpg" },
     { name = "greenlet" },
@@ -369,8 +369,8 @@ dependencies = [
 
 [[package]]
 name = "controlplane-identity"
-version = "0.15.0"
-source = { git = "https://github.com/hyperme-sh/controlplane-identity.git?rev=5675e7b617db705a7b0caf25f2d65d8a492f32b1#5675e7b617db705a7b0caf25f2d65d8a492f32b1" }
+version = "0.24.0"
+source = { git = "https://github.com/hyperme-sh/controlplane-identity.git?rev=94717d746f9d321dde1a44019c10e31acaee3204#94717d746f9d321dde1a44019c10e31acaee3204" }
 dependencies = [
     { name = "eth-abi" },
     { name = "eth-account" },
