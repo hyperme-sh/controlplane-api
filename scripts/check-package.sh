@@ -34,13 +34,13 @@ if [[ -n "${RELEASE_CANDIDATE_DIR:-}" ]]; then
   cp "$RELEASE_CANDIDATE_DIR"/*.whl "$RELEASE_CANDIDATE_DIR"/*.tar.gz "$scratch/dist/"
 else
   sync_environment
-  uv run --frozen "${run_options[@]}" pytest
   uv build --out-dir "$scratch/dist"
 fi
 # Validate the fresh candidate before running any source tests or installing code.
 distribution_hashes=$(cd "$scratch/dist" && sha256sum -- *.whl *.tar.gz)
 python3 scripts/verify_wheel.py "$scratch/dist"
 sync_environment
+uv run --frozen "${run_options[@]}" pytest --junitxml="$scratch/source.xml"
 uv run --frozen "${run_options[@]}" pytest -q tests_tools
 uv run --frozen "${run_options[@]}" python scripts/export_release_contract.py "$scratch"/dist/*.whl --output "$scratch/contract"
 for qualified_manifest in releases/qualification/current/release.json releases/candidate/release.json; do
@@ -58,7 +58,7 @@ else
   uv pip install --python "$scratch/venv/bin/python" --constraint "$scratch/requirements.txt" "$scratch"/dist/*.whl
 fi
 cp -R tests "$scratch/"
-(cd "$scratch" && "$scratch/venv/bin/python" -I -m pytest -c /dev/null tests)
+(cd "$scratch" && "$scratch/venv/bin/python" -I -m pytest -c /dev/null tests --junitxml="$scratch/wheel.xml")
 # Rebuild from the sdist; a checkout must not supply omitted package files.
 uv run --frozen "${run_options[@]}" python - "$scratch" <<'PY'
 import pathlib, sys, tarfile
@@ -71,7 +71,13 @@ uv run --frozen "${run_options[@]}" python scripts/verify_wheel.py "$scratch/reb
 uv run --frozen "${run_options[@]}" python scripts/export_release_contract.py "$scratch"/rebuilt/*.whl --output "$scratch/rebuilt-contract"
 cmp "$scratch/contract/contract.json" "$scratch/rebuilt-contract/contract.json"
 uv pip install --python "$scratch/venv/bin/python" --no-deps --reinstall "$scratch"/rebuilt/*.whl
-(cd "$scratch" && "$scratch/venv/bin/python" -I -m pytest -c /dev/null tests)
+(cd "$scratch" && "$scratch/venv/bin/python" -I -m pytest -c /dev/null tests --junitxml="$scratch/sdist.xml")
 
 # Installed tests may inspect these files, but must not replace validated bytes.
 (cd "$scratch/dist" && sha256sum --check <<< "$distribution_hashes")
+
+python3 scripts/verify-test-results.py "$scratch/source.xml" "$scratch/wheel.xml" "$scratch/sdist.xml"
+if [[ -n "${TEST_EVIDENCE_DIR:-}" ]]; then
+  mkdir -p "$TEST_EVIDENCE_DIR"
+  cp "$scratch"/*.xml "$TEST_EVIDENCE_DIR/"
+fi
