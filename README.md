@@ -2,7 +2,7 @@
 
 Shared configuration and HTTP scaffolding: settings, logging, exceptions,
 utilities, event names, metrics, CORS, health/version endpoints, permissions,
-operator plugin registration and DTOs. Package version is **0.23.0**.
+operator plugin registration and DTOs. Package version is **0.24.0**.
 
 The process owns one settings instance, Prometheus registry and router set.
 Settings configure the identity library. Plugin registration accepts trusted
@@ -32,9 +32,8 @@ read-only contents and checkout without persisted credentials. It requires
 `DEPENDENCY_READ_TOKEN` with contents:read on the identity and events repositories
 only; Git authentication headers are restricted to those repository URLs.
 The job rejects non-main refs and does not run on pull-request events.
-Actions remains disabled until scoped dependency access and the hosted-worker
-policy are configured and a main run succeeds. No publishing or deployment is
-performed by this workflow.
+The main lane retains scoped dependency access. No deployment is performed by
+this workflow.
 
 ## Release channels
 
@@ -68,3 +67,20 @@ To validate a previously built candidate locally, set `RELEASE_CANDIDATE_DIR` to
 a directory containing exactly its wheel and source distribution when invoking
 `scripts/check-package.sh`. With no candidate directory, the ordinary local
 build-and-test path is unchanged.
+
+## Isolated pull-request qualification
+
+`bash scripts/check-package.sh --fixtures` uses real published dependency wheels
+from `tests_artifacts/dependencies`, bound to the declared full Git revisions,
+locked versions and SHA-256 digests. The fixtures are excluded from wheel and
+source distributions. Missing/tampered artifacts or changed pins fail validation.
+Frozen registry dependencies are installed normally; private dependencies use
+the verified fixture bytes without resolving Git or receiving credentials.
+The separate PR workflow runs on disposable Ubuntu workers with read-only
+contents. The existing main workflow still resolves the actual private Git pins
+and retains its scoped credential and runner boundaries.
+
+Package CI exports complete runtime/resource contracts from actual wheels and
+binds candidate digests to those builds. Rebuilt-sdist contracts must match.
+Conservative byte comparisons reject implementation-only patch changes too;
+semantic compatibility, installer metadata and deployed consumers remain distinct.
