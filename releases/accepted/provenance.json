@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "repository": "hyperme-sh/controlplane-api",
+  "tag": "v0.24.0",
+  "revision": "6327a672c588fc16afb9656f2cacc89a91589858",
+  "release_id": 434687150,
+  "assets": {
+    "controlplane_api-0.24.0-py3-none-any.whl": "sha256:cc39416970f1808625ce53f11af22bc48b888dffdcecfed5d95e86a2d5f06349",
+    "controlplane_api-0.24.0.tar.gz": "sha256:2c2edd00475e904c87f093ec81bc4d19b9c6a8d8af729c1ae44dd4cdcf440763",
+    "release-manifest.json": "sha256:5f542beb0adb422d991f32ee786270c665e6ae10e3208ec412b7e19617ce9424"
+  },
+  "published_release_url": "https://github.com/hyperme-sh/controlplane-api/releases/tag/v0.24.0",
+  "qualification": "Existing immutable stable distribution; runtime deployment and coordinated consumer acceptance remain separate."
+}
