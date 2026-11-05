@@ -128,3 +128,12 @@ consumer/deployment selection must bind exact component commits and artifact
 digests, not matching repository-local counters. No stable promotion is automatic.
 Private jobs use debrunners and public jobs use hosted Ubuntu; no approval gates
 are introduced. Missing original evidence or publication collisions fail closed.
+
+## Identity age-policy adoption
+
+The immutable identity pin now includes the ordinary-token age-confirmation fix.
+Seven consumer regressions exercise that policy through this package's actual
+settings binding in source, installed-wheel and rebuilt-sdist contexts. Four denial
+cases failed with the former pin. Dependency fixtures were rebuilt from the exact
+Git archive, with matching lock metadata, source-tree and artifact digests.
+Package versions and historical accepted baselines remain unchanged.
