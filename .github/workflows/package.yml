@@ -10,7 +10,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on:
       group: shared-local
-      labels: [self-hosted, linux, x64]
+      labels: [self-hosted, linux, x64, debrunner]
     timeout-minutes: 15
     outputs:
       artifact-id: ${{ steps.candidate.outputs.artifact-id }}
@@ -43,7 +43,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on:
       group: shared-local
-      labels: [self-hosted, linux, x64]
+      labels: [self-hosted, linux, x64, debrunner]
     timeout-minutes: 15
     environment: controlplane-libs-read
     steps:
@@ -88,7 +88,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on:
       group: shared-local
-      labels: [self-hosted, linux, x64]
+      labels: [self-hosted, linux, x64, debrunner]
     timeout-minutes: 15
     environment: controlplane-libs-read
     steps:
