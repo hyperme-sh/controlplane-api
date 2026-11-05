@@ -10,7 +10,10 @@
       "sha256": "ea9ade04b1de92ce590d5f68e1d7a316f3440c576b829e852b77836d85b9f350",
       "source_url": "https://github.com/hyperme-sh/controlplane-identity/tree/e7c8f42080f41a85a43f5dbbad2cb05ac958c823",
       "delivery": "local_build_from_exact_clean_git_revision",
-      "qualification": "Exact-source development fixture; no prior release required and no publication claimed"
+      "qualification": "Exact-source development fixture; no prior release required and no publication claimed",
+      "source_archive_sha256": "980d5c781cd3768515e2b836cea0f0d368cdeb6d80375307fc672f309935cdbc",
+      "source_tree": "de8e58fe5eda6bbc0d5e526b51a2483766faecdf",
+      "build_command": "uv build --wheel <exact clean pinned git archive>"
     },
     {
       "distribution": "controlplane-events",
@@ -21,7 +24,10 @@
       "sha256": "f00cfc04cf78b65340ddfcc61288b59045c02a34f62a3c0169527dcaa09ff770",
       "source_url": "https://github.com/hyperme-sh/controlplane-events/tree/a04d980e25f71cb1d52fec7f8525633d5eb09e8f",
       "delivery": "local_build_from_exact_clean_git_revision",
-      "qualification": "Exact-source development fixture; no prior release required and no publication claimed"
+      "qualification": "Exact-source development fixture; no prior release required and no publication claimed",
+      "source_archive_sha256": "b2bc3eb5d2ac8a5849595c377c5e8d7562c531cf6a92b604e777aa82af53f393",
+      "source_tree": "715b7e88bf5fa1fb7753cd740ab59e4f2a2cec41",
+      "build_command": "uv build --wheel <exact clean pinned git archive>"
     }
   ]
 }

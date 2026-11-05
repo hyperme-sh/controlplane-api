@@ -1,5 +1,14 @@
 # controlplane-api
 
+## Current version authority
+
+Current development version: `0.23.0`. The services remain before the unreleased
+0.24.0 milestone. Earlier 0.24/1.0 preparation and publication notes below are
+historical and do not authorize those versions. Existing tags and historical
+artifacts remain untouched. Development uses exact source pins and rebuilt
+artifacts; no prior release is required. Version changes, tags and publication
+require the owner's explicit authorization to the agent.
+
 Shared configuration and HTTP scaffolding: settings, logging, exceptions,
 utilities, event names, metrics, CORS, health/version endpoints, permissions,
 operator plugin registration and DTOs. Package version is **0.24.1**.
