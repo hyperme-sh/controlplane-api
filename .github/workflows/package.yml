@@ -8,13 +8,13 @@ permissions:
 jobs:
   candidate:
     if: github.ref == 'refs/heads/main'
-    runs-on:
-      group: shared-local
-      labels: [self-hosted, linux, x64, debrunner]
+    runs-on: ${{ github.event.repository.private && fromJSON('["self-hosted", "linux", "x64", "debrunner"]') || 'ubuntu-24.04' }}
     timeout-minutes: 15
     outputs:
       artifact-id: ${{ steps.candidate.outputs.artifact-id }}
     steps:
+      - name: Prepare test evidence directory
+        run: echo "TEST_EVIDENCE_DIR=$RUNNER_TEMP/package-test-results" >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
@@ -41,12 +41,12 @@ jobs:
   source:
     needs: candidate
     if: github.ref == 'refs/heads/main'
-    runs-on:
-      group: shared-local
-      labels: [self-hosted, linux, x64, debrunner]
+    runs-on: ${{ github.event.repository.private && fromJSON('["self-hosted", "linux", "x64", "debrunner"]') || 'ubuntu-24.04' }}
     timeout-minutes: 15
     environment: controlplane-libs-read
     steps:
+      - name: Prepare test evidence directory
+        run: echo "TEST_EVIDENCE_DIR=$RUNNER_TEMP/package-test-results" >> "$GITHUB_ENV"
       - name: Mint repository-scoped dependency token
         id: dependency-token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3
@@ -86,12 +86,12 @@ jobs:
   package:
     needs: [candidate, source]
     if: github.ref == 'refs/heads/main'
-    runs-on:
-      group: shared-local
-      labels: [self-hosted, linux, x64, debrunner]
+    runs-on: ${{ github.event.repository.private && fromJSON('["self-hosted", "linux", "x64", "debrunner"]') || 'ubuntu-24.04' }}
     timeout-minutes: 15
     environment: controlplane-libs-read
     steps:
+      - name: Prepare test evidence directory
+        run: echo "TEST_EVIDENCE_DIR=$RUNNER_TEMP/package-test-results" >> "$GITHUB_ENV"
       - name: Mint repository-scoped dependency token
         id: dependency-token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3
@@ -137,3 +137,10 @@ jobs:
           candidate_hashes=$(cd "$RELEASE_CANDIDATE_DIR" && sha256sum -- *.whl *.tar.gz)
           bash scripts/check-package.sh
           (cd "$RELEASE_CANDIDATE_DIR" && sha256sum --check <<< "$candidate_hashes")
+      - name: Retain matching package test inventories
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: package-test-results
+          path: ${{ runner.temp }}/package-test-results/*.xml
+          if-no-files-found: error
+          retention-days: 90
