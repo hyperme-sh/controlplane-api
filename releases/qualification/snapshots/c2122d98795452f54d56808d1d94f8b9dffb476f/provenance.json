@@ -1,0 +1,23 @@
+{
+  "repository": "hyperme-sh/controlplane-api",
+  "revision": "c2122d98795452f54d56808d1d94f8b9dffb476f",
+  "release_id": 434639220,
+  "immutable": true,
+  "tag": "test-c2122d98795452f54d56808d1d94f8b9dffb476f",
+  "run_id": 41944884466,
+  "artifact_id": 13377692480,
+  "assets": {
+    "controlplane_api-0.24.0-py3-none-any.whl": "sha256:cc39416970f1808625ce53f11af22bc48b888dffdcecfed5d95e86a2d5f06349",
+    "controlplane_api-0.24.0.tar.gz": "sha256:2c2edd00475e904c87f093ec81bc4d19b9c6a8d8af729c1ae44dd4cdcf440763"
+  },
+  "published_release_url": "https://github.com/hyperme-sh/controlplane-api/releases/tag/test-c2122d98795452f54d56808d1d94f8b9dffb476f",
+  "checks": [
+    "successful same-repository main-push package run",
+    "live Actions artifact digest",
+    "release bytes equal tested bytes",
+    "immutable release and tag revision",
+    "asset digests equal manifest"
+  ],
+  "consumer_qualification": "Hosted PR and main passed 11 HTTP/settings/plugin consumers in source/fresh-wheel/rebuilt-sdist contexts, plus 22 tooling tests. Actual downloaded wheel passed all 11 consumers with real published identity/events dependencies.",
+  "limitations": "Full deployed-service/legacy-alias and provider acceptance remain separate."
+}
