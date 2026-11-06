@@ -103,11 +103,6 @@ class Settings(BaseSettings):
     aws_secret_access_key: str = ""
     aws_s3_bucket_name: str = "fsrapptest"
 
-    # Stripe Settings for Billing and Payments - Host Level Settings
-    stripe_api_key: str = ""
-    stripe_publishable_key: str = ""
-    stripe_secret_key: str = ""
-    stripe_webhook_secret: str = ""
 
     # Domain events default to the Postgres controlplane_events table.
     # Service Bus is an optional Azure transport on the same publish() protocol.
@@ -292,7 +287,7 @@ class Settings(BaseSettings):
         description=(
             "P0-D internal settle credential for Hypermesh "
             "POST /internal/payment-succeeded and owner-or-internal complete/payout. "
-            "Not a browser JWT. Production consumes payment.succeeded.v1 from the bus."
+            "Not a browser JWT. Production consumes payment.succeeded.v3 from the bus."
         ),
     )
 
@@ -350,12 +345,6 @@ class Settings(BaseSettings):
         validation_alias="ACL_RATE_LIMIT_PER_MINUTE",
         ge=1,
         description="Rate limit for POST /api/v1/acl/enforce (tenant+user sliding window).",
-    )
-    ai_stripe_meter_event_name: str = Field(
-        default="ai_inference_tokens",
-        validation_alias="AI_STRIPE_METER_EVENT_NAME",
-        min_length=1,
-        max_length=128,
     )
 
     def oidc_bootstrap_admin_email_set(self) -> frozenset[str]:
