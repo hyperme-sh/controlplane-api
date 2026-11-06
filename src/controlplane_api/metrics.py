@@ -2,7 +2,7 @@
 
 RED series, process collectors, and ``build_info`` are process-wide. Domain
 counters are recorded through the functions in this module so product code
-and Stripe stay behind their own clients. The scrape endpoint is a separate
+and payment providers stay behind their own clients. The scrape endpoint is a separate
 HTTP server (``METRICS_PORT``, default 9100), not a route on the public app.
 
 Label values are bounded: route templates, a fixed reason-code set, and a
