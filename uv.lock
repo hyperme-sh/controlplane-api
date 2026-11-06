@@ -337,7 +337,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "colorlog", specifier = ">=6.9.0" },
-    { name = "controlplane-events", git = "https://github.com/hyperme-sh/controlplane-events.git?rev=4f94503d99ac61ac9db3c3e8e64962df927dca4c" },
+    { name = "controlplane-events", git = "https://github.com/hyperme-sh/controlplane-events.git?rev=8f16587d105f7352891a1d9d77ec8305bbf5cd29" },
     { name = "controlplane-identity", git = "https://github.com/hyperme-sh/controlplane-identity.git?rev=5aeff3d2c00568f39ca6e8b75c7e63883d3a510b" },
     { name = "email-validator", specifier = ">=2.0.0" },
     { name = "fastapi", specifier = ">=0.135.0" },
@@ -358,7 +358,7 @@ dev = [
 [[package]]
 name = "controlplane-events"
 version = "0.1.0"
-source = { git = "https://github.com/hyperme-sh/controlplane-events.git?rev=4f94503d99ac61ac9db3c3e8e64962df927dca4c#4f94503d99ac61ac9db3c3e8e64962df927dca4c" }
+source = { git = "https://github.com/hyperme-sh/controlplane-events.git?rev=8f16587d105f7352891a1d9d77ec8305bbf5cd29#8f16587d105f7352891a1d9d77ec8305bbf5cd29" }
 dependencies = [
     { name = "asyncpg" },
     { name = "greenlet" },
