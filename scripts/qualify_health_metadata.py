@@ -47,7 +47,19 @@ def qualify(wheel, output):
         prefix = f"controlplane_api-{definition['version']}.dist-info/"
         installer = {name.removeprefix(prefix): hashlib.sha256(archive.read(name)).hexdigest()
                      for name in archive.namelist() if name.startswith(prefix) and name != prefix + 'RECORD'}
-    prove(json.loads(baseline), json.loads(contract), definition, installer)
+    before = json.loads(baseline)
+    after = json.loads(contract)
+    policy_path = ROOT / 'compatibility/password-policy.json'
+    policy = json.loads(policy_path.read_text())
+    runtime_path = 'controlplane_api/utils.py'
+    if (before['packaged_file_sha256'][runtime_path] != policy['before_sha256']
+            or after['packaged_file_sha256'][runtime_path] != policy['after_sha256']
+            or evidence['wheel_sha256'] != policy['wheel_sha256']):
+        raise ValueError('Password policy transition differs from the declared candidate')
+    # Validate the historical health transition independently of the new policy.
+    health_only = json.loads(contract)
+    health_only['packaged_file_sha256'][runtime_path] = policy['before_sha256']
+    prove(before, health_only, definition, installer)
     output.mkdir(parents=True, exist_ok=False)
     (output / 'contract.json').write_bytes(contract)
     (output / 'evidence.json').write_text(json.dumps(evidence, indent=2) + '\n')
@@ -58,7 +70,8 @@ def qualify(wheel, output):
                                          'uri': 'urn:sha256:' + evidence['wheel_sha256']}}}}
     (output / 'release.json').write_text(json.dumps(manifest, indent=2) + '\n')
     verify(output / 'release.json', output / 'contract.json', output / 'evidence.json', 'controlplane-api')
-    receipt = {'schema_version': 1, 'kind': definition['kind'], 'stable_release': False,
+    receipt = {'schema_version': 1, 'kind': 'development-password-policy-change',
+               'password_policy_definition_sha256': hashlib.sha256(policy_path.read_bytes()).hexdigest(), 'stable_release': False,
                'baseline_wheel_sha256': definition['baseline_wheel_sha256'],
                'baseline_contract_sha256': definition['baseline_contract_sha256'],
                'candidate_wheel_sha256': evidence['wheel_sha256'],
@@ -73,4 +86,4 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     qualify(args.wheel, args.output)
-    print('Exact health metadata compatibility transition verified; source qualification only')
+    print('Health metadata and password policy transitions verified; source qualification only')
