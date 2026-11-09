@@ -44,11 +44,10 @@ sync_environment
 uv run --frozen "${run_options[@]}" pytest --junitxml="$scratch/source.xml"
 uv run --frozen "${run_options[@]}" pytest -q tests_tools
 uv run --frozen "${run_options[@]}" python scripts/export_release_contract.py "$scratch"/dist/*.whl --output "$scratch/contract"
-for qualified_manifest in releases/qualification/current/release.json releases/candidate/release.json; do
-if [[ -f "$qualified_manifest" ]]; then
-  uv run --frozen "${run_options[@]}" python scripts/verify_release_candidate.py "$qualified_manifest" "$scratch/contract/contract.json" "$scratch/contract/evidence.json" controlplane-api
-fi
-done
+# Keep historical contracts intact. Only the exact reviewed, artifact-derived
+# compatibility transition may produce a fresh development qualification.
+uv run --frozen "${run_options[@]}" python scripts/qualify_health_metadata.py "$scratch"/dist/*.whl --output "$scratch/qualification"
+uv run --frozen "${run_options[@]}" python scripts/verify_release_candidate.py "$scratch/qualification/release.json" "$scratch/contract/contract.json" "$scratch/contract/evidence.json" controlplane-api
 uv export --frozen "${export_options[@]}" --no-emit-project --format requirements-txt --output-file "$scratch/requirements.txt" >/dev/null
 uv venv --python 3.13 "$scratch/venv"
 uv pip sync --python "$scratch/venv/bin/python" "$scratch/requirements.txt"
@@ -86,4 +85,5 @@ python3 scripts/verify-test-results.py "$scratch/source.xml" "$scratch/wheel.xml
 if [[ -n "${TEST_EVIDENCE_DIR:-}" ]]; then
   mkdir -p "$TEST_EVIDENCE_DIR"
   cp "$scratch"/*.xml "$TEST_EVIDENCE_DIR/"
+  cp "$scratch/qualification/compatibility.json" "$TEST_EVIDENCE_DIR/"
 fi

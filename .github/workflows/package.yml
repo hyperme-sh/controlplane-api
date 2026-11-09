@@ -141,6 +141,6 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: package-test-results
-          path: ${{ runner.temp }}/package-test-results/*.xml
+          path: ${{ runner.temp }}/package-test-results/*
           if-no-files-found: error
           retention-days: 90
