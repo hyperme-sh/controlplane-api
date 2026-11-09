@@ -87,3 +87,8 @@ if [[ -n "${TEST_EVIDENCE_DIR:-}" ]]; then
   cp "$scratch"/*.xml "$TEST_EVIDENCE_DIR/"
   cp "$scratch/qualification/compatibility.json" "$TEST_EVIDENCE_DIR/"
 fi
+
+if [[ -n "${QUALIFIED_DIST_DIR:-}" ]]; then
+  mkdir -p "$QUALIFIED_DIST_DIR"
+  cp "$scratch/dist"/*.whl "$scratch/dist"/*.tar.gz "$QUALIFIED_DIST_DIR/"
+fi

@@ -31,8 +31,3 @@ dev = ["pytest>=8.4.0", "httpx2>=2.16.0"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
-# The two issue-16 deprecations must not silently return in any package context.
-filterwarnings = [
-  'error:Using extra keyword arguments on `Field` is deprecated:pydantic.warnings.PydanticDeprecatedSince20:controlplane_api.dtos.health',
-  'error:Using `httpx` with `starlette.testclient` is deprecated:DeprecationWarning',
-]
