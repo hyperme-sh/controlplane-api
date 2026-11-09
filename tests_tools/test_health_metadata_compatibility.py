@@ -33,3 +33,21 @@ def test_unreviewed_compatibility_changes_refuse(change):
     if change == 'installer': installer['METADATA'] = 'f' * 64
     if change == 'coverage': after['coverage'] = 'partial'
     with pytest.raises(ValueError): prove(before, after, definition, installer)
+
+
+@pytest.mark.parametrize('change', ['line', 'kind', 'uri'])
+def test_historical_baseline_identity_is_verified_before_using_candidate(tmp_path, monkeypatch, change):
+    import qualify_health_metadata as migration
+    for name in ['compatibility/health-field-metadata.json', 'releases/candidate/release.json', 'releases/candidate/contract.json']:
+        target = tmp_path / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((ROOT / name).read_bytes())
+    manifest = tmp_path / 'releases/candidate/release.json'
+    data = json.loads(manifest.read_text())
+    if change == 'line': data['line'] = '9.9'
+    if change == 'kind': data['components']['controlplane-api']['artifact']['kind'] = 'unverified'
+    if change == 'uri': data['components']['controlplane-api']['artifact']['uri'] = 'https://example.invalid/wheel'
+    manifest.write_text(json.dumps(data))
+    monkeypatch.setattr(migration, 'ROOT', tmp_path)
+    with pytest.raises(ValueError, match='Historical qualification'):
+        migration.qualify(tmp_path / 'not-read.whl', tmp_path / 'result')

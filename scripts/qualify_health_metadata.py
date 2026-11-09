@@ -30,7 +30,12 @@ def qualify(wheel, output):
     baseline_manifest = json.loads((ROOT / 'releases/candidate/release.json').read_text())
     baseline = (ROOT / 'releases/candidate/contract.json').read_bytes()
     recorded = baseline_manifest['components']['controlplane-api']
-    if (hashlib.sha256(baseline).hexdigest() != definition['baseline_contract_sha256']
+    if (baseline_manifest.get('schema_version') != 1
+            or set(baseline_manifest.get('components', {})) != {'controlplane-api'}
+            or baseline_manifest.get('line') != definition['version'].rsplit('.', 1)[0]
+            or recorded['artifact']['kind'] != 'package'
+            or recorded['artifact']['uri'] != 'urn:sha256:' + definition['baseline_wheel_sha256']
+            or hashlib.sha256(baseline).hexdigest() != definition['baseline_contract_sha256']
             or recorded['contract_sha256'] != definition['baseline_contract_sha256']
             or recorded['artifact']['sha256'] != definition['baseline_wheel_sha256']
             or recorded['version'] != definition['version']):
