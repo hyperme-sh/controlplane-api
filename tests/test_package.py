@@ -87,3 +87,18 @@ def test_events_dependency_and_metrics_load():
             assert delivery_counts_sync(connection) == (0, 0)
     finally:
         engine.dispose()
+
+
+def test_health_schema_example_and_supported_testclient():
+    import starlette.testclient
+    from controlplane_api.dtos.health import HealthCheckResponseDto
+    assert starlette.testclient.httpx.__name__ == "httpx2"
+    assert HealthCheckResponseDto.model_json_schema() == {
+        "properties": {"status": {"example": "Ok", "title": "Status", "type": "string"}},
+        "required": ["status"], "title": "HealthCheckResponseDto", "type": "object",
+    }
+    app = FastAPI()
+    app.include_router(health.router)
+    with TestClient(app) as client:
+        schema = client.get("/openapi.json").json()["components"]["schemas"]["HealthCheckResponseDto"]
+        assert schema["properties"]["status"]["example"] == "Ok"

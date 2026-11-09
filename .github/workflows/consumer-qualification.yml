@@ -9,7 +9,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Prepare test evidence directory
-        run: echo "TEST_EVIDENCE_DIR=$RUNNER_TEMP/package-test-results" >> "$GITHUB_ENV"
+        run: |
+          echo "TEST_EVIDENCE_DIR=$RUNNER_TEMP/package-test-results" >> "$GITHUB_ENV"
+          echo "QUALIFIED_DIST_DIR=$(mktemp -d "$RUNNER_TEMP/qualified-dist.XXXXXX")" >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
@@ -22,6 +24,13 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: package-test-results
-          path: ${{ runner.temp }}/package-test-results/*.xml
+          path: ${{ runner.temp }}/package-test-results/*
+          if-no-files-found: error
+          retention-days: 90
+      - name: Retain exact tested distribution bytes separately
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: qualified-dist
+          path: ${{ env.QUALIFIED_DIST_DIR }}/*
           if-no-files-found: error
           retention-days: 90

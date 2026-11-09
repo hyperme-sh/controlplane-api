@@ -23,10 +23,11 @@ packages = ["src/controlplane_api"]
 allow-direct-references = true
 
 [tool.hatch.build.targets.sdist]
-include = ["LICENSE", "/src", "/tests", "/scripts", "/pyproject.toml", "/uv.lock", "/README.md"]
+include = ["LICENSE", "/src", "/tests", "/scripts", "/compatibility", "/releases/candidate", "/pyproject.toml", "/uv.lock", "/README.md"]
 
 [dependency-groups]
-dev = ["pytest>=8.4.0", "httpx>=0.28.0"]
+dev = ["pytest>=8.4.0", "httpx2>=2.16.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+

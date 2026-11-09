@@ -177,3 +177,22 @@ Channel behavior, the `test-<commit>` snapshots, and the stable tag workflow are
 ## License
 
 This package is licensed under [Apache-2.0](LICENSE). Dependencies keep their own licenses.
+
+### Health metadata compatibility
+
+The health DTO uses Pydantic's `json_schema_extra` while retaining its complete
+JSON Schema, OpenAPI example and HTTP payload. The test environment uses
+`httpx2` for Starlette's TestClient; runtime dependency declarations and package
+version remain unchanged.
+
+`compatibility/health-field-metadata.json` records the exact previous successful
+main artifact, contract and installer hashes, plus the one reviewed health-module
+transition. Qualification keeps the complete byte exporter and historical
+records intact. `scripts/qualify_health_metadata.py` rejects every other runtime,
+inventory or installer change, binds a fresh candidate descriptor to the actual
+built wheel, and runs the unchanged candidate verifier. Its compatibility receipt
+is retained with the three package test inventories. This is development
+qualification, not a stable baseline, publication or deployment authorization.
+
+The implementation follows [Pydantic's field schema customization](https://docs.pydantic.dev/latest/concepts/json_schema/)
+and [Starlette's TestClient dependency contract](https://starlette.dev/testclient/).

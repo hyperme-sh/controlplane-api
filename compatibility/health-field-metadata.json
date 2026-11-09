@@ -1,0 +1,24 @@
+{
+  "after_sha256": "c0f5fb0c8b6a7b36c4a3f74e188723fdf51a9dbb3fe272010702620816f02c9c",
+  "baseline_contract_sha256": "3cf6e142afe9b77f8c8d00e0e43263458a1bcc6f095a6aaff62c7d016c27ace3",
+  "baseline_provenance": {
+    "artifact_digest": "sha256:bdb4c64aa051d4ddf128c7f683db71babbfb5fad6db36cd70bf0af5b160abc0f",
+    "artifact_id": 13528692498,
+    "repository": "hyperme-sh/controlplane-api",
+    "revision": "a44f730fba9d191f2370f6c508868bf6df823f22",
+    "run_id": 42269884578
+  },
+  "baseline_wheel_sha256": "8f43a977da47e4b0971e4194570f7d459cf8fb9052f10b9aa21c4fed6f4c8af4",
+  "before_sha256": "3eaf193abbf73017f5f17787e18f2ef7e69bf4d5b0853fa438986b004a1f6ee4",
+  "compatibility": "Only the exact reviewed Field example to json_schema_extra rewrite; complete DTO/OpenAPI schema and HTTP payload assertions remain required. All other runtime and installer bytes must match.",
+  "dist_info_sha256": {
+    "METADATA": "88a23e65dc777448e5d5c2750777c6ecc910e5791948f5262b2a828668f26df0",
+    "WHEEL": "da266b2640c891e0e1d24f528a428ca85b913feb9aea66f822bd40b04478044c",
+    "licenses/LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  "kind": "development-compatible-contract-transition",
+  "runtime_path": "controlplane_api/dtos/health.py",
+  "schema_version": 1,
+  "stable_release": false,
+  "version": "0.23.0"
+}
