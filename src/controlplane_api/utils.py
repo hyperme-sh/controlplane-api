@@ -40,11 +40,11 @@ def is_development_environment() -> bool:
     return get_app_environment() == "development"
 
 
-PASSWORD_REGEX = re.compile(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]")
+PASSWORD_REGEX = re.compile(r"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}")
 def validate_password(password: str) -> str:
     """Validate password strength. Raises InvalidOperationException if invalid."""
-    if not PASSWORD_REGEX.match(password):
-        raise InvalidOperationException("Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and a special character.")
+    if not PASSWORD_REGEX.fullmatch(password):
+        raise InvalidOperationException("Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and a special character from @$!%*?&. Only letters A-Z/a-z, digits, and these special characters are allowed.")
     return password
 
 
