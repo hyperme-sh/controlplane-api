@@ -42,7 +42,7 @@ The package on this line is **0.23.0** and requires **Python 3.13+**. [uv](https
 | `controlplane-identity` | [hyperme-sh/controlplane-identity](https://github.com/hyperme-sh/controlplane-identity) | `a2cb7f055dced17f76e64009395ffb7599557a71` |
 | `controlplane-events` | [hyperme-sh/controlplane-events](https://github.com/hyperme-sh/controlplane-events) | `2a49f9af5f6c4dc9d6c4ddebc83c41d6331e2c87` |
 
-The coordinated test bundle [`0.24.0-test.1`](https://github.com/hyperme-sh/controlplane-api/releases/tag/0.24.0-test.1) is this package at revision `732256a5207ee502d7bf70cb171cf2eea1803b87` and ships `controlplane_api-0.23.0`. The stable tag [`v0.24.0`](https://github.com/hyperme-sh/controlplane-api/releases/tag/v0.24.0) is an earlier published build whose wheel is `controlplane_api-0.24.0`. Channel rules are in [docs/releasing.md](docs/releasing.md).
+The stable tag [`v0.24.0`](https://github.com/hyperme-sh/controlplane-api/releases/tag/v0.24.0) is a published build whose wheel is `controlplane_api-0.24.0`. Automatic package prereleases are not published. Channel rules are in [docs/releasing.md](docs/releasing.md).
 
 Clone and install the locked development environment:
 
@@ -166,11 +166,11 @@ bash scripts/check-package.sh
 
 `scripts/check-package.sh` checks `uv.lock`, builds a wheel and sdist, runs the test suite from the source tree, from that wheel installed outside the checkout, and from a wheel rebuilt from the sdist. The two wheels must carry the same runtime sources, and their exported release contracts must match.
 
-Pull requests run the same script with `--fixtures`. That path installs the checked-in wheels in `tests_artifacts/dependencies` for `controlplane-identity` and `controlplane-events`. Main validation resolves those pinned commits from Git. See [docs/releasing.md](docs/releasing.md) for qualification artifacts, test bundles, and stable tags.
+Pull requests run the same script with `--fixtures`. That path installs the checked-in wheels in `tests_artifacts/dependencies` for `controlplane-identity` and `controlplane-events`. Main validation resolves those pinned commits from Git. See [docs/releasing.md](docs/releasing.md) for qualification records and stable tags.
 
 ## Release and versioning
 
-The version in `pyproject.toml` is **0.23.0**. GitHub release [v0.24.0](https://github.com/hyperme-sh/controlplane-api/releases/tag/v0.24.0) is the immutable stable distribution recorded under `releases/accepted/`. Successful validation of `main` can publish a `0.24.0-test.N` prerelease bundle; the files inside that bundle keep the package version of the build (`0.23.0` today). A stable release is a separate `v*` tag.
+The version in `pyproject.toml` is **0.23.0**. GitHub release [v0.24.0](https://github.com/hyperme-sh/controlplane-api/releases/tag/v0.24.0) is the immutable stable distribution recorded under `releases/accepted/`. Automatic package prereleases are not published. A stable release is a separate `v*` tag.
 
 Channel behavior, the `test-<commit>` snapshots, and the stable tag workflow are documented in [docs/releasing.md](docs/releasing.md). Admission steps for a candidate bundle are in [docs/release-policy.md](docs/release-policy.md).
 
