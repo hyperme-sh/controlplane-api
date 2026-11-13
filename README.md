@@ -196,3 +196,20 @@ qualification, not a stable baseline, publication or deployment authorization.
 
 The implementation follows [Pydantic's field schema customization](https://docs.pydantic.dev/latest/concepts/json_schema/)
 and [Starlette's TestClient dependency contract](https://starlette.dev/testclient/).
+
+## Edge secret rotation and startup guard
+
+`API_KEY_EXCHANGE_JWT_SECRET_PREVIOUS` and `API_KEYS_INTERNAL_TOKEN_PREVIOUS`
+are optional previous values. The plural `usable_*` methods return current then
+previous; the existing singular methods keep their behavior. An empty current
+slot is preserved so consumers cannot mint with a previous secret.
+
+Services adopt `settings.require_edge_secrets()` at startup. It requires distinct
+current secrets of at least 32 characters and rejects published defaults and
+`dev-`, `laptop-`, or `replace-with` prefixes. Configured previous values must
+meet the same rules and differ from every other configured edge secret. Errors
+name settings without printing values. The check is strict by default;
+`EDGE_SECRETS_REQUIRED=false` is an explicit laptop/test opt-out. Merely importing
+this package does not run the check. Rotation-aware decoding requires the
+identity library's plural-settings support; service adoption and Infra secret
+rendering are tracked separately in gateway #58, edge #60 and Infra #972.

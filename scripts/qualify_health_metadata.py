@@ -64,6 +64,13 @@ def qualify(wheel, output):
     health_only = json.loads(contract)
     health_only['packaged_file_sha256'][runtime_path] = policy['before_sha256']
     del health_only['packaged_file_sha256']['controlplane_api/audit_files.py']
+    rotation = json.loads((ROOT / 'compatibility/edge-secret-settings.json').read_text())
+    rotation_path = 'controlplane_api/config/__init__.py'
+    if (rotation.get('schema_version') != 1 or rotation.get('runtime_path') != rotation_path
+            or before['packaged_file_sha256'].get(rotation_path) != rotation['before_sha256']
+            or after['packaged_file_sha256'].get(rotation_path) != rotation['after_sha256']):
+        raise ValueError('Edge settings differ from the declared transition')
+    health_only['packaged_file_sha256'][rotation_path] = rotation['before_sha256']
     prove(before, health_only, definition, installer)
     output.mkdir(parents=True, exist_ok=False)
     (output / 'contract.json').write_bytes(contract)

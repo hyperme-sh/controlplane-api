@@ -256,7 +256,7 @@ class Settings(BaseSettings):
         description="If True, /auth/me rejects tokens unless MFA is indicated (amr/acr).",
     )
     api_key_exchange_jwt_secret: str = Field(
-        default="",
+        default="", repr=False,
         validation_alias="API_KEY_EXCHANGE_JWT_SECRET",
         description=(
             "HS256 secret for short-lived JWTs minted after API key validation "
@@ -264,13 +264,20 @@ class Settings(BaseSettings):
         ),
     )
     api_keys_internal_token: str = Field(
-        default="",
+        default="", repr=False,
         validation_alias="API_KEYS_INTERNAL_TOKEN",
         description=(
             "Shared secret for gateway → api-keys-service internal validate. "
             "Empty or a published default fails closed."
         ),
     )
+    api_key_exchange_jwt_secret_previous: str = Field(
+        default="", repr=False, validation_alias="API_KEY_EXCHANGE_JWT_SECRET_PREVIOUS",
+    )
+    api_keys_internal_token_previous: str = Field(
+        default="", repr=False, validation_alias="API_KEYS_INTERNAL_TOKEN_PREVIOUS",
+    )
+    edge_secrets_required: bool = Field(default=True, validation_alias="EDGE_SECRETS_REQUIRED")
     payment_internal_token: str = Field(
         default="",
         validation_alias="PAYMENT_INTERNAL_TOKEN",
@@ -392,6 +399,35 @@ class Settings(BaseSettings):
 
     def usable_api_keys_internal_token(self) -> str | None:
         return _usable_shared_secret(self.api_keys_internal_token, _PUBLISHED_API_KEY_SECRETS)
+
+    def usable_api_key_exchange_secrets(self) -> tuple[str | None, ...]:
+        current = self.usable_api_key_exchange_secret()
+        previous = _usable_shared_secret(self.api_key_exchange_jwt_secret_previous, _PUBLISHED_API_KEY_SECRETS)
+        return (current, previous) if previous else (current,)
+
+    def usable_api_keys_internal_tokens(self) -> tuple[str | None, ...]:
+        current = self.usable_api_keys_internal_token()
+        previous = _usable_shared_secret(self.api_keys_internal_token_previous, _PUBLISHED_API_KEY_SECRETS)
+        return (current, previous) if previous else (current,)
+
+    def require_edge_secrets(self) -> None:
+        """Called by adopting services at startup; never includes secret values."""
+        if not self.edge_secrets_required:
+            return
+        names = ("API_KEY_EXCHANGE_JWT_SECRET", "API_KEYS_INTERNAL_TOKEN",
+                 "API_KEY_EXCHANGE_JWT_SECRET_PREVIOUS", "API_KEYS_INTERNAL_TOKEN_PREVIOUS")
+        values = (self.api_key_exchange_jwt_secret.strip(), self.api_keys_internal_token.strip(),
+                  self.api_key_exchange_jwt_secret_previous.strip(), self.api_keys_internal_token_previous.strip())
+        seen: set[str] = set()
+        for index, (name, value) in enumerate(zip(names, values)):
+            if index >= 2 and not value:
+                continue
+            if (len(value) < 32 or value in _PUBLISHED_API_KEY_SECRETS
+                    or value.lower().startswith(("dev-", "laptop-", "replace-with"))):
+                raise ValueError(f"{name} must be a non-default secret of at least 32 characters")
+            if value in seen:
+                raise ValueError(f"{name} must differ from the other edge secrets")
+            seen.add(value)
 
     @field_validator(
         "keycloak_jwks_url",
