@@ -1,6 +1,6 @@
 # Release compatibility
 
-Channel behavior for this repository (source version, test bundles, and stable tags) is in [releasing.md](releasing.md).
+Channel behavior for this repository (source version and stable tags) is in [releasing.md](releasing.md).
 
 This component targets the shared **0.24.x** release line. Components share major
 and minor versions; patch numbers advance independently and must preserve their
@@ -38,4 +38,4 @@ for the manifest format and compatibility rules.
 
 ## Test qualification and stable acceptance
 
-`test-<commit>` snapshots, `0.24.0-test.N` bundles, and the accepted `v0.24.0` record are described in [releasing.md](releasing.md).
+`test-<commit>` snapshots and the accepted `v0.24.0` record are described in [releasing.md](releasing.md). Automatic package prereleases are not published.
