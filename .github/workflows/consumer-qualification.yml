@@ -27,10 +27,3 @@ jobs:
           path: ${{ runner.temp }}/package-test-results/*
           if-no-files-found: error
           retention-days: 90
-      - name: Retain exact tested distribution bytes separately
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: qualified-dist
-          path: ${{ env.QUALIFIED_DIST_DIR }}/*
-          if-no-files-found: error
-          retention-days: 90
