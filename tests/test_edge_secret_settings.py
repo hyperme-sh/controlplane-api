@@ -54,3 +54,16 @@ def test_rotation_order_and_no_previous_promotion():
     assert settings.usable_api_key_exchange_secret() == current
     assert settings.usable_api_keys_internal_token() == token
     assert valid(**{CURRENT:'', CURRENT+'_PREVIOUS':previous}).usable_api_key_exchange_secrets() == (None,previous)
+
+
+def test_bound_identity_uses_rotating_settings(monkeypatch):
+    import uuid
+    from controlplane_identity import configuration
+    from controlplane_identity.security.api_key_exchange_jwt import mint_api_key_session_jwt, try_decode_api_key_session_jwt
+    previous=secrets.token_hex(24)
+    monkeypatch.setattr(configuration, '_configured', valid(**{CURRENT:previous}))
+    token=mint_api_key_session_jwt(key_record_id=uuid.uuid4(), tenant_id=uuid.uuid4(), scopes=['chat'])
+    monkeypatch.setattr(configuration, '_configured', valid(**{CURRENT+'_PREVIOUS':previous}))
+    assert try_decode_api_key_session_jwt(token)
+    monkeypatch.setattr(configuration, '_configured', valid())
+    assert try_decode_api_key_session_jwt(token) is None

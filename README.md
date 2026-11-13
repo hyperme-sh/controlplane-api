@@ -39,7 +39,7 @@ The package on this line is **0.23.0** and requires **Python 3.13+**. [uv](https
 
 | Package | Repository | Commit |
 |---|---|---|
-| `controlplane-identity` | [hyperme-sh/controlplane-identity](https://github.com/hyperme-sh/controlplane-identity) | `5aeff3d2c00568f39ca6e8b75c7e63883d3a510b` |
+| `controlplane-identity` | [hyperme-sh/controlplane-identity](https://github.com/hyperme-sh/controlplane-identity) | `a2cb7f055dced17f76e64009395ffb7599557a71` |
 | `controlplane-events` | [hyperme-sh/controlplane-events](https://github.com/hyperme-sh/controlplane-events) | `2a49f9af5f6c4dc9d6c4ddebc83c41d6331e2c87` |
 
 The coordinated test bundle [`0.24.0-test.1`](https://github.com/hyperme-sh/controlplane-api/releases/tag/0.24.0-test.1) is this package at revision `732256a5207ee502d7bf70cb171cf2eea1803b87` and ships `controlplane_api-0.23.0`. The stable tag [`v0.24.0`](https://github.com/hyperme-sh/controlplane-api/releases/tag/v0.24.0) is an earlier published build whose wheel is `controlplane_api-0.24.0`. Channel rules are in [docs/releasing.md](docs/releasing.md).

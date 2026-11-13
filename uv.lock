@@ -338,7 +338,7 @@ dev = [
 requires-dist = [
     { name = "colorlog", specifier = ">=6.9.0" },
     { name = "controlplane-events", git = "https://github.com/hyperme-sh/controlplane-events.git?rev=8f16587d105f7352891a1d9d77ec8305bbf5cd29" },
-    { name = "controlplane-identity", git = "https://github.com/hyperme-sh/controlplane-identity.git?rev=5aeff3d2c00568f39ca6e8b75c7e63883d3a510b" },
+    { name = "controlplane-identity", git = "https://github.com/hyperme-sh/controlplane-identity.git?rev=a2cb7f055dced17f76e64009395ffb7599557a71" },
     { name = "email-validator", specifier = ">=2.0.0" },
     { name = "fastapi", specifier = ">=0.135.0" },
     { name = "prometheus-client", specifier = ">=0.21.1" },
@@ -370,7 +370,7 @@ dependencies = [
 [[package]]
 name = "controlplane-identity"
 version = "0.15.0"
-source = { git = "https://github.com/hyperme-sh/controlplane-identity.git?rev=5aeff3d2c00568f39ca6e8b75c7e63883d3a510b#5aeff3d2c00568f39ca6e8b75c7e63883d3a510b" }
+source = { git = "https://github.com/hyperme-sh/controlplane-identity.git?rev=a2cb7f055dced17f76e64009395ffb7599557a71#a2cb7f055dced17f76e64009395ffb7599557a71" }
 dependencies = [
     { name = "eth-abi" },
     { name = "eth-account" },

@@ -71,6 +71,10 @@ def qualify(wheel, output):
             or after['packaged_file_sha256'].get(rotation_path) != rotation['after_sha256']):
         raise ValueError('Edge settings differ from the declared transition')
     health_only['packaged_file_sha256'][rotation_path] = rotation['before_sha256']
+    if (installer.get('METADATA') != rotation['metadata_after_sha256']
+            or definition['dist_info_sha256']['METADATA'] != rotation['metadata_before_sha256']):
+        raise ValueError('Identity dependency metadata differs from the declared transition')
+    installer['METADATA'] = rotation['metadata_before_sha256']
     prove(before, health_only, definition, installer)
     output.mkdir(parents=True, exist_ok=False)
     (output / 'contract.json').write_bytes(contract)
