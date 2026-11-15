@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "publication_cleared": false,
+  "findings": [
+    {
+      "kind": "hosted-code",
+      "object": "d26a05d1df1203d6b2876fabf3f99f5a50318f8a",
+      "path": "src/controlplane_api/config/__init__.py",
+      "blob_sha256": "dbec0eb7603fbccc1a03b23df784dbddb2d862d5f0916be275b7743889fa2e3f",
+      "classification": "legacy-provider-settings",
+      "disposition": "Retained provider setting declarations; no secret values observed in these fields; historical publication remains uncleared",
+      "content_sha256": "dbec0eb7603fbccc1a03b23df784dbddb2d862d5f0916be275b7743889fa2e3f"
+    },
+    {
+      "kind": "hosted-code",
+      "object": "91a9d774394d61fd7bac59d8762a937ffa940294",
+      "path": "src/controlplane_api/metrics.py",
+      "blob_sha256": "c487090e821d100dcf7c5ec9c53b721205d83992175ea9ec6fe95c4860aed11f",
+      "classification": "provider-name-in-comment",
+      "disposition": "Descriptive client-boundary prose, not provider implementation",
+      "content_sha256": "c487090e821d100dcf7c5ec9c53b721205d83992175ea9ec6fe95c4860aed11f"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/payloads/payment_events.py",
+      "object": "9691ee81cdca8b3f7dc61c587902929cc38bac09",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.1.0-py3-none-any.whl",
+      "blob_sha256": "7eb2b90f0958ea4a8fd14708f73eb6eb11e721bd9f2844ffdbe3ab837173f042",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "0de016cae2f319c2145b1097110b62418a00b1d73fc4cb3b8c1c8a7a06d4ade7"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/schemas/hypermesh.payout.due.v1.json",
+      "object": "9691ee81cdca8b3f7dc61c587902929cc38bac09",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.1.0-py3-none-any.whl",
+      "blob_sha256": "7eb2b90f0958ea4a8fd14708f73eb6eb11e721bd9f2844ffdbe3ab837173f042",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "2d8313d6687237e3c3ae2288e6df874d1b133a6898d7e439d1b3ad9d8873c82c"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/schemas/payment.succeeded.v1.json",
+      "object": "9691ee81cdca8b3f7dc61c587902929cc38bac09",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.1.0-py3-none-any.whl",
+      "blob_sha256": "7eb2b90f0958ea4a8fd14708f73eb6eb11e721bd9f2844ffdbe3ab837173f042",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "9dc8278a3e446bca7c220fe3b813e0b2934f8325dfe1994b1d2d535537af077f"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/schemas/payment.succeeded.v2.json",
+      "object": "9691ee81cdca8b3f7dc61c587902929cc38bac09",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.1.0-py3-none-any.whl",
+      "blob_sha256": "7eb2b90f0958ea4a8fd14708f73eb6eb11e721bd9f2844ffdbe3ab837173f042",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "6a33ee1158727c69f8a9f129cf8c8baaca612c725417fbd11b2442f47f19350d"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/payloads/payment_events.py",
+      "object": "56a38768506da4ea6a673a3bc448b2b367f78dbd",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.1.0-py3-none-any.whl",
+      "blob_sha256": "f00cfc04cf78b65340ddfcc61288b59045c02a34f62a3c0169527dcaa09ff770",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "0de016cae2f319c2145b1097110b62418a00b1d73fc4cb3b8c1c8a7a06d4ade7"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/schemas/hypermesh.payout.due.v1.json",
+      "object": "56a38768506da4ea6a673a3bc448b2b367f78dbd",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.1.0-py3-none-any.whl",
+      "blob_sha256": "f00cfc04cf78b65340ddfcc61288b59045c02a34f62a3c0169527dcaa09ff770",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "2d8313d6687237e3c3ae2288e6df874d1b133a6898d7e439d1b3ad9d8873c82c"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/schemas/payment.succeeded.v1.json",
+      "object": "56a38768506da4ea6a673a3bc448b2b367f78dbd",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.1.0-py3-none-any.whl",
+      "blob_sha256": "f00cfc04cf78b65340ddfcc61288b59045c02a34f62a3c0169527dcaa09ff770",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "9dc8278a3e446bca7c220fe3b813e0b2934f8325dfe1994b1d2d535537af077f"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/schemas/payment.succeeded.v2.json",
+      "object": "56a38768506da4ea6a673a3bc448b2b367f78dbd",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.1.0-py3-none-any.whl",
+      "blob_sha256": "f00cfc04cf78b65340ddfcc61288b59045c02a34f62a3c0169527dcaa09ff770",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "6a33ee1158727c69f8a9f129cf8c8baaca612c725417fbd11b2442f47f19350d"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/payloads/payment_events.py",
+      "object": "f98f70189cd098176d21eb6f2f2bc2a81e7e50ce",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.24.0-py3-none-any.whl",
+      "blob_sha256": "3956b4d78429e7158b053d9d0d4c425659e6f82a2b9ead8f1614bfae6d15939f",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "0de016cae2f319c2145b1097110b62418a00b1d73fc4cb3b8c1c8a7a06d4ade7"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/schemas/hypermesh.payout.due.v1.json",
+      "object": "f98f70189cd098176d21eb6f2f2bc2a81e7e50ce",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.24.0-py3-none-any.whl",
+      "blob_sha256": "3956b4d78429e7158b053d9d0d4c425659e6f82a2b9ead8f1614bfae6d15939f",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "2d8313d6687237e3c3ae2288e6df874d1b133a6898d7e439d1b3ad9d8873c82c"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/schemas/payment.succeeded.v1.json",
+      "object": "f98f70189cd098176d21eb6f2f2bc2a81e7e50ce",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.24.0-py3-none-any.whl",
+      "blob_sha256": "3956b4d78429e7158b053d9d0d4c425659e6f82a2b9ead8f1614bfae6d15939f",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "9dc8278a3e446bca7c220fe3b813e0b2934f8325dfe1994b1d2d535537af077f"
+    },
+    {
+      "kind": "hosted-code",
+      "member": "controlplane_events/schemas/payment.succeeded.v2.json",
+      "object": "f98f70189cd098176d21eb6f2f2bc2a81e7e50ce",
+      "path": "tests_artifacts/dependencies/controlplane_events-0.24.0-py3-none-any.whl",
+      "blob_sha256": "3956b4d78429e7158b053d9d0d4c425659e6f82a2b9ead8f1614bfae6d15939f",
+      "classification": "legacy-provider-event-contract",
+      "disposition": "Retained historical schema/payload fields; not current runtime or publication clearance",
+      "content_sha256": "6a33ee1158727c69f8a9f129cf8c8baaca612c725417fbd11b2442f47f19350d"
+    },
+    {
+      "kind": "hosted-code",
+      "object": "4f9c1b095f9dacd803e4d0464c6844e9cdc914bf",
+      "path": "src/controlplane_api/config/__init__.py",
+      "blob_sha256": "c8225f7278264ad0f7b90d963f29288ab11d060bbba7ec55d15149dd665dc6e3",
+      "classification": "legacy-provider-settings",
+      "disposition": "Retained provider setting declarations; no secret values observed in these fields; historical publication remains uncleared",
+      "content_sha256": "c8225f7278264ad0f7b90d963f29288ab11d060bbba7ec55d15149dd665dc6e3"
+    },
+    {
+      "kind": "hosted-code",
+      "object": "1d9616282adb04c45364fbeca6f3637e1ef7e1f2",
+      "path": "src/controlplane_api/metrics.py",
+      "blob_sha256": "c5c0909e90e69e8c0b5823361db17316060ce33b4ced3f3468b123f721b5b830",
+      "classification": "provider-name-in-comment",
+      "disposition": "Descriptive client-boundary prose, not provider implementation",
+      "content_sha256": "c5c0909e90e69e8c0b5823361db17316060ce33b4ced3f3468b123f721b5b830"
+    }
+  ]
+}
