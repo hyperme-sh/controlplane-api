@@ -128,4 +128,7 @@ if __name__ == '__main__':
     else:
         inventory = installed(args.path)
         verify_notice_bundle(Path('/usr/share/doc/controlplane-api'), inventory)
+        for name in ('LICENSE', 'NOTICE'):
+            if (Path('/usr/share/doc/controlplane-api') / name).read_bytes() != (args.path.parent / name).read_bytes():
+                raise ValueError('Owner legal bytes differ')
         print(json.dumps(inventory, indent=2))

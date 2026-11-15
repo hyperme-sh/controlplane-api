@@ -30,13 +30,10 @@ printf '%s  %s\n' 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470
 mkdir "$scratch/tool"
 tar -xzf "$scratch/$archive" -C "$scratch/tool" gitleaks
 status=0
-"$scratch/tool/gitleaks" dir "$scratch/layers" --redact --no-banner --max-archive-depth 3 --ignore-gitleaks-allow --report-format json --report-path "$scratch/findings.json" || status=$?
-if [[ "$status" != 0 ]]; then
-  python3 - "$scratch/findings.json" <<'DIAG'
-import json, sys
-for row in json.load(open(sys.argv[1])):
-    print({k: row.get(k) for k in ('File', 'StartLine', 'RuleID')})
-DIAG
+"$scratch/tool/gitleaks" dir "$scratch/layers" --no-banner --max-archive-depth 3 --ignore-gitleaks-allow --report-format json --report-path "$scratch/findings.json" >"$scratch/scanner.log" 2>&1 || status=$?
+if [[ "$status" == 1 ]]; then
+  python3 scripts/classify_base_fingerprint.py "$scratch/findings.json" "$scratch/layers"
+elif [[ "$status" != 0 ]]; then
   exit "$status"
 fi
 
@@ -44,8 +41,8 @@ fi
 # Metadata and source-byte inspection only; no service or database is started.
 docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
   --mount "type=bind,src=$PWD/scripts/container_audit.py,dst=/audit.py,readonly" \
-  --mount "type=bind,src=$PWD/src,dst=/audit-source,readonly" \
-  --entrypoint /opt/api/bin/python "$image" -I /audit.py installed /audit-source
+  --mount "type=bind,src=$PWD,dst=/audit-root,readonly" \
+  --entrypoint /opt/api/bin/python "$image" -I /audit.py installed /audit-root/src
 printf 'Prepared image %s: %s\n' "$image" "$(docker image inspect "$image" --format '{{.Id}}')"
 
 if [[ -n "${QUALIFIED_IMAGE_OUTPUT:-}" ]]; then

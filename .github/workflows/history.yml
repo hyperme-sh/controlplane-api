@@ -20,5 +20,6 @@ jobs:
           set -euo pipefail
           scratch=$(mktemp -d "$RUNNER_TEMP/cli-history.XXXXXX")
           trap 'rm -rf -- "$scratch"' EXIT
-          python3 scripts/review-history.py "$scratch/objects"
+          python3 scripts/review_history.py "$scratch/objects" "$scratch/report.json"
+          cat "$scratch/report.json"
           bash scripts/scan-secrets.sh "$scratch/objects"
