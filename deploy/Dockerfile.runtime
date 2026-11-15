@@ -1,0 +1,28 @@
+# Only qualified wheel bytes and hashed registry requirements enter this context.
+FROM python:3.13-slim-bookworm AS build
+WORKDIR /build
+RUN pip install --no-cache-dir uv==0.11.26
+COPY requirements.txt ./
+RUN uv venv /opt/api && uv pip sync --python /opt/api/bin/python --require-hashes requirements.txt
+COPY dependencies/ ./dependencies/
+COPY *.whl ./
+RUN uv pip install --python /opt/api/bin/python --no-deps dependencies/*.whl ./*.whl && uv pip check --python /opt/api/bin/python
+# This HTTP service does not ship Jupyter notebook frontend assets.
+RUN rm -rf /opt/api/share/jupyter
+COPY licenses/ ./licenses/
+COPY prepare_notices.py ./
+RUN /opt/api/bin/python -I prepare_notices.py /opt/notices licenses
+
+FROM python:3.13-slim-bookworm
+COPY --from=build /opt/api /opt/api
+COPY --from=build /opt/notices /usr/share/doc/controlplane-api/third-party
+COPY LICENSE NOTICE /usr/share/doc/controlplane-api/
+ENV PATH=/opt/api/bin:$PATH PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+ARG SOURCE_SHA
+ARG WHEEL_SHA256
+LABEL org.opencontainers.image.licenses="Apache-2.0" \
+      org.opencontainers.image.source="https://github.com/hyperme-sh/controlplane-api" \
+      org.opencontainers.image.revision=${SOURCE_SHA} \
+      sh.hyperme.qualified-wheel-sha256=${WHEEL_SHA256}
+USER 65532:65532
+CMD ["/opt/api/bin/python", "-I", "-c", "import importlib.metadata as m; print('controlplane-api ' + m.version('controlplane-api') + ': shared library; supply a consumer command')"]

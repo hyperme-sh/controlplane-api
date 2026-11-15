@@ -47,6 +47,16 @@ def qualify(wheel, output):
         prefix = f"controlplane_api-{definition['version']}.dist-info/"
         installer = {name.removeprefix(prefix): hashlib.sha256(archive.read(name)).hexdigest()
                      for name in archive.namelist() if name.startswith(prefix) and name != prefix + 'RECORD'}
+    with zipfile.ZipFile(wheel) as archive:
+        notice = archive.read(prefix + 'licenses/NOTICE')
+        if notice != (ROOT / 'NOTICE').read_bytes():
+            raise ValueError('Owner notice differs')
+        metadata = archive.read(prefix + 'METADATA')
+        marker = b'License-File: NOTICE\n'
+        if metadata.count(marker) != 1:
+            raise ValueError('Expected exactly one owner NOTICE metadata field')
+        installer['METADATA'] = hashlib.sha256(metadata.replace(marker, b'', 1)).hexdigest()
+        del installer['licenses/NOTICE']
     before = json.loads(baseline)
     after = json.loads(contract)
     policy_path = ROOT / 'compatibility/password-policy.json'
