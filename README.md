@@ -213,3 +213,19 @@ name settings without printing values. The check is strict by default;
 this package does not run the check. Rotation-aware decoding requires the
 identity library's plural-settings support; service adoption and Infra secret
 rendering are tracked separately in gateway #58, edge #60 and Infra #972.
+
+## Public distribution preparation
+
+PR and main CI qualify the frozen public identity/events dependency graph with
+an empty credential environment and fresh home/cache. A separate fixture lane
+continues to check exact dependency snapshots. Both validate source, wheel and
+rebuilt-source package contracts; these are temporary build inputs, not published
+package releases. CI keeps results in job logs and uploads no Actions archives.
+
+[Infra #993](https://github.com/FyberLabs/infra/issues/993) tracks remaining owner
+NOTICE and third-party notices, reachable-history and older-image reviews, and
+GHCR container preparation. This repository provides shared scaffolding rather
+than a standalone application, so a container must have an explicit consumer
+contract before publication. No new runtime entrypoint is implied. Existing
+versions, historical release records and service behavior remain unchanged.
+TEST services use moving channels; integration/e2e stays in scheduled nightly CI.
