@@ -25,7 +25,7 @@ python3 scripts/container_audit.py image "$scratch/image.tar" --output "$scratch
 # Scan every layer, including lower-layer files hidden by a later deletion.
 version=8.30.1
 archive="gitleaks_${version}_linux_x64.tar.gz"
-curl --fail --silent --show-error --location "https://github.com/gitleaks/gitleaks/releases/download/v${version}/${archive}" -o "$scratch/$archive"
+curl --retry 3 --retry-all-errors --connect-timeout 20 --max-time 120 --fail --silent --show-error --location "https://github.com/gitleaks/gitleaks/releases/download/v${version}/${archive}" -o "$scratch/$archive"
 printf '%s  %s\n' 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb "$scratch/$archive" | sha256sum --check
 mkdir "$scratch/tool"
 tar -xzf "$scratch/$archive" -C "$scratch/tool" gitleaks
