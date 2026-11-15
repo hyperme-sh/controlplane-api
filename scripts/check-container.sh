@@ -3,7 +3,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 : "${QUALIFIED_DIST_DIR:?Use qualified package output}"
 : "${GITHUB_SHA:?Record the qualified source revision}"
-scratch=$(mktemp -d)
+scratch=$(mktemp -d "${RUNNER_TEMP:-/tmp}/api-container.XXXXXX")
 image="ghcr.io/hyperme-sh/controlplane-api/runtime:preparation-${GITHUB_RUN_ID:-local}-${GITHUB_RUN_ATTEMPT:-1}"
 qualified=false
 cleanup() {
@@ -29,7 +29,17 @@ curl --fail --silent --show-error --location "https://github.com/gitleaks/gitlea
 printf '%s  %s\n' 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb "$scratch/$archive" | sha256sum --check
 mkdir "$scratch/tool"
 tar -xzf "$scratch/$archive" -C "$scratch/tool" gitleaks
-"$scratch/tool/gitleaks" dir "$scratch/layers" --redact --no-banner --max-archive-depth 3 --ignore-gitleaks-allow
+status=0
+"$scratch/tool/gitleaks" dir "$scratch/layers" --redact --no-banner --max-archive-depth 3 --ignore-gitleaks-allow --report-format json --report-path "$scratch/findings.json" || status=$?
+if [[ "$status" != 0 ]]; then
+  python3 - "$scratch/findings.json" <<'DIAG'
+import json, sys
+for row in json.load(open(sys.argv[1])):
+    print({k: row.get(k) for k in ('File', 'StartLine', 'RuleID')})
+DIAG
+  exit "$status"
+fi
+
 
 # Metadata and source-byte inspection only; no service or database is started.
 docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
