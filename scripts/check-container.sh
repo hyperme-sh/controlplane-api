@@ -50,6 +50,9 @@ docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-
 docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
   --mount "type=bind,src=$PWD/scripts/verify_base.py,dst=/base-check.py,readonly" \
   --entrypoint /opt/api/bin/python "$image" -I /base-check.py installed /usr/share/doc/controlplane-api/sources/base-image.json /usr/share/doc/controlplane-api/sources
+docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
+  --mount "type=bind,src=$PWD/scripts/prepare_debian_sources.py,dst=/debian-check.py,readonly" \
+  --entrypoint /opt/api/bin/python "$image" -I /debian-check.py verify /usr/share/doc/controlplane-api/debian-sources
 bash scripts/check-library-replacement.sh "$image"
 printf 'Prepared image %s: %s\n' "$image" "$(docker image inspect "$image" --format '{{.Id}}')"
 

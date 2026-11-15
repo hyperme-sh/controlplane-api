@@ -15,9 +15,13 @@ RUN /opt/api/bin/python -I prepare_notices.py /opt/notices licenses
 COPY sources/ /opt/sources/
 COPY prepare_sources.py ./
 RUN /opt/api/bin/python -I prepare_sources.py verify /opt/sources
+COPY debian-sources/ /opt/debian-sources/
+COPY prepare_debian_sources.py ./
+RUN /opt/api/bin/python -I prepare_debian_sources.py verify /opt/debian-sources
 
 FROM python:3.13-slim-bookworm@sha256:a5a7017efc5969e00ae2b91c8eb0631049a569652aa4ffc4501769049ae45c72
 COPY --from=build /opt/api /opt/api
+COPY --from=build /opt/debian-sources /usr/share/doc/controlplane-api/debian-sources
 COPY --from=build /opt/sources /usr/share/doc/controlplane-api/sources
 COPY --from=build /opt/notices /usr/share/doc/controlplane-api/third-party
 COPY LICENSE NOTICE /usr/share/doc/controlplane-api/
