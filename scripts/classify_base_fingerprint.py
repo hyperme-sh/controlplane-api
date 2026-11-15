@@ -17,7 +17,9 @@ if __name__ == '__main__':
     from classify_source_findings import classify
     root = Path(__file__).resolve().parents[1]
     accepted, unexpected = classify(unexpected, Path(sys.argv[2]), json.loads((root / 'licenses/sources.json').read_text()), json.loads((root / '.github/workflows/source-scan-baseline.json').read_text()))
-    print(json.dumps({'public_source_matches': accepted}))
+    from classify_debian_findings import classify as classify_debian
+    debian, unexpected = classify_debian(unexpected, Path(sys.argv[2]), json.loads((root / 'licenses/debian-sources.json').read_text()), json.loads((root / '.github/workflows/debian-source-scan-baseline.json').read_text()))
+    print(json.dumps({'public_source_matches': accepted, 'debian_source_matches': debian}))
     print(json.dumps({'public_fingerprint_matches': fingerprint_count, 'unexpected': len(unexpected)}))
     for row in unexpected:
         print({k: row.get(k) for k in ('File', 'StartLine', 'RuleID')})

@@ -910,7 +910,7 @@
     "source_sha256": "abb0102e6d4ae027509bcb82327d9dd85515b44a3ba8ad538cfc5e9847029f68"
   },
   "remaining": [
-    "Debian source URLs identify exact source package versions; Debian source archives are not yet bundled or rebuilt",
-    "No complete native/base bit-identical rebuild claim"
+    "No complete native/base bit-identical rebuild claim",
+    "Descriptor signature trust-chain verification is not claimed"
   ]
 }

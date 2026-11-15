@@ -46,6 +46,8 @@ def prepare(distribution, output):
     shutil.copytree(root / ".github/workflows/source-provenance", output / "sources/provenance")
     shutil.copyfile(root / "scripts/prepare_sources.py", output / "prepare_sources.py")
     shutil.copyfile(root / "licenses/base-image.json", output / "sources/base-image.json")
+    subprocess.run([sys.executable, str(root / "scripts/prepare_debian_sources.py"), "fetch", str(root / "licenses/debian-sources.json"), "--base", str(root / "licenses/base-image.json"), "--output", str(output / "debian-sources")], check=True)
+    shutil.copyfile(root / "scripts/prepare_debian_sources.py", output / "prepare_debian_sources.py")
     inventory = {p.relative_to(output).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                  for p in sorted(output.rglob("*")) if p.is_file()}
     (output / "inventory.json").write_text(json.dumps(inventory, sort_keys=True, indent=2) + "\n")
