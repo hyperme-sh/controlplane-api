@@ -62,8 +62,7 @@ The user is the sole developer. Never add or enable GitHub required reviewers, b
 ## Isolated dependency fixtures
 
 The read-only PR qualification workflow may use disposable hosted Ubuntu workers
-with verified real dependency wheels and no private credentials. Preserve the
-existing main runner/credential lane. Test fixtures must remain outside published
+with verified real dependency wheels and no private credentials. Main qualification also uses anonymous public dependencies. Test fixtures must remain outside published
 distributions and match both project pins and the frozen lock.
 
 ## Private CI runner policy
@@ -106,4 +105,4 @@ Use exact versions and digests for downloadable bundles and to record or verify 
 Both PR and main validate anonymous locked dependencies without App tokens or
 environment credentials. The fixture lane remains a separate contract check.
 No Actions archive uploads are used. GHCR is the intended container distribution
-path; a runtime/container contract still needs preparation for this shared library.
+path; docs/public-distribution.md defines the prepared shared-library consumer image.

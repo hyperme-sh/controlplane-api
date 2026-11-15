@@ -229,3 +229,5 @@ than a standalone application, so a container must have an explicit consumer
 contract before publication. No new runtime entrypoint is implied. Existing
 versions, historical release records and service behavior remain unchanged.
 TEST services use moving channels; integration/e2e stays in scheduled nightly CI.
+
+See [public distribution preparation](docs/public-distribution.md) for the consumer image contract, legal inventory, scan boundaries and remaining work.

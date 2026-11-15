@@ -7,7 +7,7 @@ name = "controlplane-api"
 version = "0.23.0"
 requires-python = ">=3.13"
 license = "Apache-2.0"
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "NOTICE"]
 description = "Shared configuration and HTTP API scaffolding"
 dependencies = [
     "controlplane-identity @ git+https://github.com/hyperme-sh/controlplane-identity.git@a2cb7f055dced17f76e64009395ffb7599557a71", "controlplane-events @ git+https://github.com/hyperme-sh/controlplane-events.git@8f16587d105f7352891a1d9d77ec8305bbf5cd29", "colorlog>=6.9.0", "fastapi>=0.135.0",
@@ -23,7 +23,7 @@ packages = ["src/controlplane_api"]
 allow-direct-references = true
 
 [tool.hatch.build.targets.sdist]
-include = ["LICENSE", "/src", "/tests", "/scripts", "/compatibility", "/releases/candidate", "/pyproject.toml", "/uv.lock", "/README.md"]
+include = ["LICENSE", "NOTICE", "/src", "/tests", "/scripts", "/compatibility", "/releases/candidate", "/pyproject.toml", "/uv.lock", "/README.md"]
 
 [dependency-groups]
 dev = ["pytest>=8.4.0", "httpx2>=2.16.0"]
