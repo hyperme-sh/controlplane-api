@@ -13,6 +13,16 @@ if __name__=='__main__':
     result['legal_paths']=sorted(str(p.relative_to(layers)) for p in layers.rglob('*') if p.is_file() and ('/usr/share/doc/' in '/'+str(p.relative_to(layers)) or '/usr/share/common-licenses/' in '/'+str(p.relative_to(layers))))
     result['source_bundle_present']=any(p.endswith('/sources/index.json') for p in result['legal_paths'])
     result['debian_source_bundle_present']=any(p.endswith('/debian-sources/index.json') for p in result['legal_paths'])
+    from container_audit import check_member
+    findings=[]
+    for path in layers.rglob('*'):
+        if path.is_file() and 'site-packages/' in str(path):
+            relative=str(path).partition('site-packages/')[2]
+            try:
+                check_member(relative,path.read_bytes())
+            except ValueError:
+                findings.append(str(path.relative_to(layers)))
+    result['hosted_content_paths']=sorted(findings)
     result['publication_cleared']=False
     result['scope']='All retained layers, not a reconstructed final filesystem; secret scan is separate'
     print('HISTORICAL_IMAGE_REVIEW='+json.dumps(result,sort_keys=True))

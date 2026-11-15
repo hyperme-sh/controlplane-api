@@ -119,9 +119,13 @@ if __name__ == '__main__':
     try:
         main(args.output)
     except urllib.error.HTTPError as exc:
-        if exc.code not in (401, 403, 404):
+        path = urllib.parse.urlsplit(exc.url).path
+        if exc.code not in (401, 403, 404) or path not in ('/token', '/v2/' + REPOSITORY + '/tags/list'):
             raise
         # GHCR can conceal private or absent packages with the same response.
         print('REGISTRY_REVIEW_UNAVAILABLE=' + json.dumps({'http_status': exc.code, 'repository': REPOSITORY, 'publication_cleared': False, 'absence_verified': False}))
+        if os.environ.get('GITHUB_STEP_SUMMARY'):
+            with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+                summary.write('Historical GHCR inventory unavailable (HTTP ' + str(exc.code) + '). No images reviewed; absence is not verified; publication remains uncleared.\n')
         with open(args.output, 'w') as stream:
             stream.write('review-needed=false\nmatrix={"include":[]}\n')
