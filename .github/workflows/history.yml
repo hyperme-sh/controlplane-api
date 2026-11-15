@@ -1,0 +1,24 @@
+name: Reachable history review
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  history:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Scan reachable objects without executing old code
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch=$(mktemp -d "$RUNNER_TEMP/cli-history.XXXXXX")
+          trap 'rm -rf -- "$scratch"' EXIT
+          python3 scripts/review-history.py "$scratch/objects"
+          bash scripts/scan-secrets.sh "$scratch/objects"
