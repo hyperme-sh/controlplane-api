@@ -12735,6 +12735,28 @@
         ]
       },
       "classification": "Public ssl documentation placeholder; contains no private key bytes"
+    },
+    {
+      "archive": "manylinux-libxcrypt-binary.tar.gz",
+      "member": "tmp/GmVHR2Ei",
+      "sha256": "d563359664417a7b572e444f62d579751bd20d8f80b0573cff3357767d737378",
+      "rules": {
+        "generic-api-key": [
+          1220
+        ]
+      },
+      "classification": "Retained public libxcrypt Makefile intermediate: obsolete APIs comment and version/linker flags, not credentials"
+    },
+    {
+      "archive": "manylinux-libxcrypt-binary.tar.gz",
+      "member": "tmp/GmoTbO9g",
+      "sha256": "6301681e73bb25bee6ec0ca53936395cae4e9ef226f842cdd21f82825a5536dc",
+      "rules": {
+        "generic-api-key": [
+          1220
+        ]
+      },
+      "classification": "Retained public libxcrypt Makefile intermediate: obsolete APIs comment and version/linker flags, not credentials"
     }
   ]
 }
