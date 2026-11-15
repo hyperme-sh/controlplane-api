@@ -10,8 +10,8 @@ import tarfile
 import urllib.parse
 import urllib.request
 
-HOSTS = {'files.pythonhosted.org', 'codeload.github.com', 'vault.centos.org', 'www.openldap.org', 'github.com', 'quay.io'}
-REDIRECT_HOSTS = {'release-assets.githubusercontent.com', 'cdn01.quay.io'}
+HOSTS = {'www.python.org', 'files.pythonhosted.org', 'codeload.github.com', 'vault.centos.org', 'www.openldap.org', 'github.com', 'quay.io'}
+REDIRECT_HOSTS = {'www.python.org', 'release-assets.githubusercontent.com', 'cdn01.quay.io'}
 
 
 def allowed_url(url, redirect=False):
@@ -24,7 +24,7 @@ def allowed_url(url, redirect=False):
 class ReviewedRedirects(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, request, response, code, message, headers, newurl):
         if not allowed_url(newurl, redirect=True):
-            raise ValueError('Source redirect escaped reviewed HTTPS hosts')
+            raise ValueError('Source redirect escaped reviewed HTTPS hosts: ' + str(urllib.parse.urlsplit(newurl).hostname))
         return super().redirect_request(request, response, code, message, headers, newurl)
 
 
@@ -69,6 +69,7 @@ def fetch(manifest_path, output):
     output.mkdir(parents=True, exist_ok=False)
     opener = urllib.request.build_opener(ReviewedRedirects())
     for row in manifest['archives']:
+        print('Fetching reviewed source: ' + row['filename'], flush=True)
         target = output / row['filename']
         with opener.open(row['url'], timeout=60) as response, target.open('xb') as stream:
             if not allowed_url(response.url, redirect=True):

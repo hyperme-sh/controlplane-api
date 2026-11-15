@@ -11,8 +11,14 @@ CI checks recipient-modified certifi and an ABI-compatible modified libpq throug
 read-only mounts with networking disabled. It starts no service or database.
 This is a replacement-loading contract, not a complete native rebuild.
 
-The locked wheel's bundled libcrypt has different code sections from the prior
-3.3.7 preparation. Its exact source/build origin remains unresolved and is
-reported explicitly; the earlier provenance is not reused. Publication remains
-uncleared. Base-image source/legal work and historical-content/older-image review
-are separate follow-ups. No visibility or history changes are made here.
+The locked wheel's bundled libcrypt now has an exact upstream manylinux build
+reference: archived psycopg run 35339446265/job 105581758837 names image
+c163a278006f45883c117b4166b93cdc7b574b62e58292ed9e52879579841d77.
+Its manifest/config pair binds the source version/hash to the original native
+layer. Original and installed .text/.rodata sections match. This closes the
+previous 3.3.6 mapping gap without substituting the different 3.3.7 build.
+CI verifies that chain and carries libxcrypt 4.5.2 sources and license texts.
+All mapped native sources are present; bit-identical native rebuilds are not claimed.
+
+See BASE.md for base-image source/legal review. Publication remains uncleared;
+no visibility change, history rewrite or registry push is part of this change.

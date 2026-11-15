@@ -45,4 +45,4 @@ The bytes remain retained and require separate content disposition.
 
 The [source/replacement preparation](../licenses/SOURCES.md) records the locked
 LGPL/MPL components, hash-bound source materials, offline replacement checks and
-the unresolved libcrypt origin for psycopg-binary 3.3.6.
+the verified libcrypt origin for psycopg-binary 3.3.6 and base review limits.
