@@ -10,8 +10,8 @@ import tarfile
 import urllib.parse
 import urllib.request
 
-HOSTS = {'files.pythonhosted.org', 'codeload.github.com', 'vault.centos.org', 'www.openldap.org', 'github.com', 'quay.io'}
-REDIRECT_HOSTS = {'release-assets.githubusercontent.com', 'cdn01.quay.io'}
+HOSTS = {'www.python.org', 'files.pythonhosted.org', 'codeload.github.com', 'vault.centos.org', 'www.openldap.org', 'github.com', 'quay.io'}
+REDIRECT_HOSTS = {'www.python.org', 'release-assets.githubusercontent.com', 'cdn01.quay.io'}
 
 
 def allowed_url(url, redirect=False):

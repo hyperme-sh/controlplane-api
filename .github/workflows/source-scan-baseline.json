@@ -12702,6 +12702,39 @@
         ]
       },
       "classification": "upstream public test/vector, example, checksum or API declaration; never a service credential"
+    },
+    {
+      "archive": "libxcrypt-4.5.2.tar.xz",
+      "member": "libxcrypt-4.5.2/Makefile.am",
+      "sha256": "05fd097b5b49d979eaa9f1afa31a008f347ea3f41b074009aeb95ab9415a5b23",
+      "rules": {
+        "generic-api-key": [
+          154
+        ]
+      },
+      "classification": "upstream Makefile comment describing shared-library ABI versions; no credential"
+    },
+    {
+      "archive": "libxcrypt-4.5.2.tar.xz",
+      "member": "libxcrypt-4.5.2/Makefile.in",
+      "sha256": "f5827b51b702534e30bfe0a59fd5aa36d9c5a502695f5f4182dfde1a25007c0c",
+      "rules": {
+        "generic-api-key": [
+          1220
+        ]
+      },
+      "classification": "upstream Makefile comment describing shared-library ABI versions; no credential"
+    },
+    {
+      "archive": "Python-3.13.18.tar.xz",
+      "member": "Python-3.13.18/Doc/library/ssl.rst",
+      "sha256": "47b3910ef17f460d3bfe54d5a22f3d01e3df86c1e1158562fb8b3db302a1b755",
+      "rules": {
+        "private-key": [
+          2263
+        ]
+      },
+      "classification": "Public ssl documentation placeholder; contains no private key bytes"
     }
   ]
 }
