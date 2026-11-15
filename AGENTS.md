@@ -42,7 +42,7 @@ for trusted local code. Consumer alias compatibility requires separate tests.
 
 Run bash scripts/check-package.sh with read access to the pinned identity and
 events repositories. Keep full dependency SHAs in standard package metadata and
-uv.lock. Validate source, fresh-wheel and rebuilt-sdist contexts. The main lane retains scoped dependency access and shared-runner qualification.
+uv.lock. Validate source, fresh-wheel and rebuilt-sdist contexts. PR and main qualification use anonymous public dependency access with a fresh home/cache.
 
 ## Package publication permission boundary
 
@@ -100,3 +100,10 @@ repeat those jobs by hand on shared hosts.
 Each TEST service automatically tracks the latest PR merged into its repository's default branch. Deploy the tested build through a moving TEST channel. Do not pin running services to versions, commit SHAs or image digests, require manual pin updates, or require peer services to run matching builds. Preserve patch compatibility, including during early development, and verify it through the service contract.
 
 Use exact versions and digests for downloadable bundles and to record or verify which binary was built, tested or released. A running service may report its revision for diagnostics. Production follows its existing promotion policy and explicit release authorization.
+
+## Public dependency preparation
+
+Both PR and main validate anonymous locked dependencies without App tokens or
+environment credentials. The fixture lane remains a separate contract check.
+No Actions archive uploads are used. GHCR is the intended container distribution
+path; a runtime/container contract still needs preparation for this shared library.
