@@ -231,3 +231,9 @@ versions, historical release records and service behavior remain unchanged.
 TEST services use moving channels; integration/e2e stays in scheduled nightly CI.
 
 See [public distribution preparation](docs/public-distribution.md) for the consumer image contract, legal inventory, scan boundaries and remaining work.
+
+## Runtime distribution
+
+Runtime builds do not download or bundle third-party source archives. Owner
+LICENSE/NOTICE and dependency legal texts remain in the image. Source-bundle
+records describe earlier builds only; no separate source container is introduced.
