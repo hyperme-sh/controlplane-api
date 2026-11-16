@@ -1,3 +1,7 @@
+> Superseded: runtime images no longer download or include source archives.
+> LICENSE/NOTICE and dependency legal texts remain. The records below describe
+> prior builds and are retained for historical review, not current build steps.
+
 # Python base source/legal review
 
 base-image.json records the exact Linux amd64 Python image already used by the

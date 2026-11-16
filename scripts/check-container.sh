@@ -21,6 +21,7 @@ python3 scripts/container_audit.py wheels "$scratch/context"
 wheel=$(sha256sum "$scratch"/context/*.whl | cut -d ' ' -f 1)
 docker build --build-arg "SOURCE_SHA=$GITHUB_SHA" --build-arg "WHEEL_SHA256=$wheel" --tag "$image" "$scratch/context"
 docker save --output "$scratch/image.tar" "$image"
+python3 scripts/assert-no-source-bundles.py "$scratch/image.tar"
 python3 scripts/container_audit.py image "$scratch/image.tar" --output "$scratch/layers"
 python3 scripts/verify_base.py layers licenses/base-image.json "$scratch/layers/image-config.json"
 # Scan every layer, including lower-layer files hidden by a later deletion.
@@ -44,15 +45,6 @@ docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-
   --mount "type=bind,src=$PWD/scripts/container_audit.py,dst=/audit.py,readonly" \
   --mount "type=bind,src=$PWD,dst=/audit-root,readonly" \
   --entrypoint /opt/api/bin/python "$image" -I /audit.py installed /audit-root/src
-docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
-  --mount "type=bind,src=$PWD/scripts/prepare_sources.py,dst=/source-check.py,readonly" \
-  --entrypoint /opt/api/bin/python "$image" -I /source-check.py verify /usr/share/doc/controlplane-api/sources
-docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
-  --mount "type=bind,src=$PWD/scripts/verify_base.py,dst=/base-check.py,readonly" \
-  --entrypoint /opt/api/bin/python "$image" -I /base-check.py installed /usr/share/doc/controlplane-api/sources/base-image.json /usr/share/doc/controlplane-api/sources
-docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
-  --mount "type=bind,src=$PWD/scripts/prepare_debian_sources.py,dst=/debian-check.py,readonly" \
-  --entrypoint /opt/api/bin/python "$image" -I /debian-check.py verify /usr/share/doc/controlplane-api/debian-sources
 bash scripts/check-library-replacement.sh "$image"
 printf 'Prepared image %s: %s\n' "$image" "$(docker image inspect "$image" --format '{{.Id}}')"
 

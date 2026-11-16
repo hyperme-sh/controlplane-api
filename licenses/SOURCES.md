@@ -1,3 +1,7 @@
+> Superseded: runtime images no longer download or include source archives.
+> LICENSE/NOTICE and dependency legal texts remain. The records below describe
+> prior builds and are retained for historical review, not current build steps.
+
 # Source and replacement preparation
 
 The locked consumer image includes certifi 2026.10.23 (MPL-2.0) and psycopg /
